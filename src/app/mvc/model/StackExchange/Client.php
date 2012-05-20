@@ -23,6 +23,9 @@ class Client
         $data = array();
         foreach (array_chunk($ids, 100) as $i => $batch) {
             $result = $this->executeRequest($this->formatEndpoint($batch));
+            if (isset($_GET['debug'])) {
+                echo "\n<!-- findByIds --><pre>\n", print_r($allLinks, 1), "\n</pre>\n";
+            }
             if (isset($result->items)) {
                 $data = array_merge($data, $result->items);
                 echo "<pre>\n", var_dump($data), "\n</pre>";
@@ -43,8 +46,8 @@ class Client
             stream_context_get_default(),
             'http',
             'header',
-            'Accept-Encoding: gzip, deflate'
-        );
+            'Accept-Encoding:'
+        ); // gzip, deflate put to a rest.
         $data = json_decode(file_get_contents($url));
         return $data === null ? array() : $data;
     }
