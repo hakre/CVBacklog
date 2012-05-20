@@ -20,5 +20,3 @@ $url = 'compress.zlib://https://api.stackexchange.com/2.0/questions/9094558;9095
 $data = file_get_contents($url, false, $context);
 
 echo '<pre>', $data, '</pre>', "\n\n";
-
-echo '<pre>', gzinflate(substr($data,10,-8)), '</pre>';
