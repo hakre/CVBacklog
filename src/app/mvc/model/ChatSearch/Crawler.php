@@ -33,7 +33,9 @@ class Crawler
         } while (
             --$maxScrapes !== 0 && !empty($links)
         );
-        return array_unique($allLinks);
+        $allLinks = array_unique($allLinks);
+        echo "\n<!-- findAllQuestionIds --><pre>\n", print_r($allLinks, 1), "\n</pre>\n";
+        return $allLinks;
     }
 
     /**
@@ -41,8 +43,6 @@ class Crawler
      */
     protected function scrapeCurrentUrlForQuestionIds()
     {
-        $data = file_get_contents($this->webpage);
-        echo "<pre>\n", htmlspecialchars($data), "\n</pre>";
         return preg_match_all(
             '(
                 http://              # match hyperlinks
@@ -51,7 +51,7 @@ class Crawler
                 q(?:uestions)?/      # with path q or questions
                 (?P<qid>\d+)         # and get the Question ID
             )xiu',
-            $data,
+            $data = file_get_contents($this->webpage),
             $matches
         )
         ? $matches['qid']
