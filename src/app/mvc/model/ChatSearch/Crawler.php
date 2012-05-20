@@ -34,7 +34,9 @@ class Crawler
             --$maxScrapes !== 0 && !empty($links)
         );
         $allLinks = array_unique($allLinks);
-        echo "\n<!-- findAllQuestionIds --><pre>\n", print_r($allLinks, 1), "\n</pre>\n";
+        if (isset($_GET['debug'])) {
+            echo "\n<!-- findAllQuestionIds --><pre>\n", print_r($allLinks, 1), "\n</pre>\n";
+        }
         return $allLinks;
     }
 
