@@ -24,11 +24,10 @@ class Client
         foreach (array_chunk($ids, 100) as $i => $batch) {
             $result = $this->executeRequest($this->formatEndpoint($batch));
             if (isset($_GET['debug'])) {
-                echo "\n<!-- findByIds --><pre>\n", print_r($allLinks, 1), "\n</pre>\n";
+                echo "\n<!-- findByIds --><pre>\n", var_dump($result), "\n</pre>\n";
             }
             if (isset($result->items)) {
                 $data = array_merge($data, $result->items);
-                echo "<pre>\n", var_dump($data), "\n</pre>";
             } else {
                 error_log("Error fetching batch $i: " . var_export($result, true));
             }
