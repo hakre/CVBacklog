@@ -53,7 +53,7 @@ class Client
      * @return string
      */
     protected function formatEndpoint(array $ids) {
-        return  'compress.zlib://' . sprintf(
+        return  sprintf(
             urldecode($this->endpoint),
             implode(';', $ids)
         );
