@@ -41,6 +41,8 @@ class Crawler
      */
     protected function scrapeCurrentUrlForQuestionIds()
     {
+        $data = file_get_contents($this->webpage);
+        echo "<pre>\n", htmlspecialchars($data), "\n</pre>";
         return preg_match_all(
             '(
                 http://              # match hyperlinks
@@ -49,7 +51,7 @@ class Crawler
                 q(?:uestions)?/      # with path q or questions
                 (?P<qid>\d+)         # and get the Question ID
             )xiu',
-            file_get_contents($this->webpage),
+            $data,
             $matches
         )
         ? $matches['qid']
